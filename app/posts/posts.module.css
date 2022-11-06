@@ -70,3 +70,15 @@
 	justify-content: center;
 	align-items: center;
 }
+
+.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	text-indent: 4px;
+	letter-spacing: 4px;
+	font-size: 8px;
+	height: 100px;
+	color: var(--gray);
+}

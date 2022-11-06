@@ -32,3 +32,9 @@ a {
 		background: var(--deepgrey);
 	}
 }
+
+button:disabled,
+button[disabled] {
+  background-color: transparent;
+  color: var(--deepgrey);
+}
