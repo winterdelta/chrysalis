@@ -1,0 +1,39 @@
+.microphone {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 120px;
+	width: 100px;
+	border-radius: 30px 30px 40px 40px;
+	background-color: #ccf3ff;
+	color: var(--deepgrey);
+	filter: drop-shadow(0 0 0.75rem var(--blue));
+}
+
+.time {
+	font-style: italic;
+	margin-top: 20px;
+	color: var(--blue);
+	font-size: 14px;
+    letter-spacing: 1px;
+    background-color: transparent;
+}
+
+.form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+}
+
+.imageSearch {
+	border-radius: 40px;
+	border: none;
+	height: 50px;
+	width: 50px;
+	margin-left: 120px;
+	background-color: var(--blue);
+	color: var(--deepgrey);
+	filter: drop-shadow(0 0 0.25rem var(--blue));
+}
