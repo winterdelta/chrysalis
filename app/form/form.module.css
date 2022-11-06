@@ -7,7 +7,7 @@
 	border-radius: 30px 30px 40px 40px;
 	background-color: #ccf3ff;
 	color: var(--deepgrey);
-	filter: drop-shadow(0 0 0.75rem var(--blue));
+	/* filter: drop-shadow(0 0 0.75rem var(--blue)); */
 }
 
 .time {
@@ -15,8 +15,8 @@
 	margin-top: 20px;
 	color: var(--blue);
 	font-size: 14px;
-    letter-spacing: 1px;
-    background-color: transparent;
+	letter-spacing: 1px;
+	background-color: transparent;
 }
 
 .form {
@@ -35,5 +35,16 @@
 	margin-left: 120px;
 	background-color: var(--blue);
 	color: var(--deepgrey);
-	filter: drop-shadow(0 0 0.25rem var(--blue));
+	/* filter: drop-shadow(0 0 0.25rem var(--blue)); */
+}
+
+.lock {
+	/* position: absolute; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* filter: drop-shadow(0 0 0.75rem var(--gray)); */
+	/* padding-top: 140px; */
+	margin-top: 30px;
+    color: var(--gray);
 }

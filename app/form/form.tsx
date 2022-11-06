@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { ImageSearchAlt, MicrophoneFilled } from "@carbon/icons-react";
+import { ImageSearchAlt, MicrophoneFilled, Locked } from "@carbon/icons-react";
 import styles from "./form.module.css";
 import { IBM_Plex_Mono } from "@next/font/google";
 
@@ -18,6 +17,9 @@ export default function Form() {
 			</div>
 			<div className={inter.className}>
 				<div className={styles.time}>00:00</div>
+			</div>
+			<div className={styles.lock}>
+				<Locked size='16' />
 			</div>
 		</div>
 	);
