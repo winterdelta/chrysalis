@@ -52,7 +52,7 @@ export default function Posts() {
 			{/* {!data ? <div>loading...</div> : <div>DATA LOADED</div>} */}
 
 			{data
-				? data.map((d: any, index: any) => (
+				? data?.map((d: any, index: any) => (
 						<div
 							// style={{backgroundImage: `url("${d.data.image}")`,}}
 							className={styles.post}
@@ -60,7 +60,7 @@ export default function Posts() {
 						>
 							{/* <div className={styles.frostedLayer}> */}
 							<div
-								style={{ backgroundImage: `url("${d.data.image}")` }}
+								style={{ backgroundImage: `url("${d.data?.image}")` }}
 								className={styles.imageContainer}
 							>
 								{/* <Image
@@ -73,7 +73,7 @@ export default function Posts() {
 								/> */}
 							</div>
 							<div className={styles.playBtn}>
-								{playing && trackPlaying === d.data.audio ? (
+								{playing && trackPlaying === d.data?.audio ? (
 									<button
 										className={styles.button}
 										onClick={() => {
@@ -86,7 +86,7 @@ export default function Posts() {
 									<button
 										className={styles.button}
 										onClick={() => {
-											setTrackPlaying(d.data.audio);
+											setTrackPlaying(d.data?.audio);
 											setPlaying(true);
 										}}
 									>
@@ -99,7 +99,7 @@ export default function Posts() {
 							</div>
 							<div className={styles.textContainer}>
 								<div className={styles.text}>
-									<div className={interText.className}>{d.data.transcript}</div>
+									<div className={interText.className}>{d.data?.transcript}</div>
 								</div>
 							</div>
 							{/* </div> */}
