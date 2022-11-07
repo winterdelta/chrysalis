@@ -1,9 +1,9 @@
 :root {
 	--blue: #ccf3ff;
 	--deepgrey: #0f0f11;
-  --black: black;
-  --gray: rgb(89, 89, 89);
-  --white: rgb(218, 218, 218);
+	--black: black;
+	--gray: rgb(89, 89, 89);
+	--white: rgb(218, 218, 218);
 }
 
 html,
@@ -35,6 +35,16 @@ a {
 
 button:disabled,
 button[disabled] {
-  background-color: transparent;
-  color: var(--deepgrey);
+	background-color: transparent;
+	color: var(--deepgrey);
+}
+
+@media (prefers-color-scheme: light) {
+	html {
+		color-scheme: dark;
+	}
+	body {
+		color: white;
+		background: var(--deepgrey);
+	}
 }

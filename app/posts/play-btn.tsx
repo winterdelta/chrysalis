@@ -4,7 +4,7 @@ import { PauseFilled, PlayFilledAlt } from "@carbon/icons-react";
 import { useState } from "react";
 import styles from "./play-btn.module.css";
 
-export default function Counter() {
+export default function Play() {
 	const [play, setPlay] = useState(true);
 
 	const togglePlay = () => {

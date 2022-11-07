@@ -9,16 +9,15 @@
 	color: var(--deepgrey);
 	border: none;
 	cursor: pointer;
-	/* filter: drop-shadow(0 0 0.75rem var(--blue)); */
 }
 
 .stopGlow {
 	animation: pulse 2s infinite;
 	border-radius: 100px;
 	color: var(--deepgrey);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 @keyframes pulse {
@@ -75,17 +74,12 @@
 	background-color: var(--blue);
 	color: var(--deepgrey);
 	cursor: pointer;
-	/* filter: drop-shadow(0 0 0.25rem var(--blue)); */
 }
 
 .lock {
-	/* position: absolute; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	/* filter: drop-shadow(0 0 0.75rem var(--gray)); */
-	/* padding-top: 140px; */
-	margin-top: 30px;;
 	color: var(--gray);
 }
 
@@ -107,4 +101,39 @@
 	background-color: var(--blue);
 	color: var(--deepgrey);
 	cursor: pointer;
+}
+
+.transcript {
+	width: 250px;
+	border: 1px solid var(--blue);
+	background-color: transparent;
+	color: var(--gray);
+	padding: 16px;
+	border-radius: 30px;
+	font-size: 18px;
+	height: 200px;
+	margin-top: 20px;
+	resize: none;
+}
+
+.sendBtn {
+	color: var(--deepgrey);
+	background-color: var(--blue);
+	border: none;
+	height: 50px;
+	width: 250px;
+	border-radius: 10px;
+	margin-top: 20px;
+	cursor: pointer;
+}
+
+.encryptedConversation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: var(--blue);
+    height: 100%;
+    width: 100%;
+    margin-top: 30px;
 }

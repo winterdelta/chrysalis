@@ -7,7 +7,7 @@ export default function Home() {
 		<div>
 			<div className={styles.container}>
 				<main className={styles.main}>
-					<div className={styles.mantra}>If you know you know</div>
+					{/* <div className={styles.mantra}>If you know you know</div> */}
 					<div className={styles.content}>
 						<div className={styles.form}>
 							<Form />
