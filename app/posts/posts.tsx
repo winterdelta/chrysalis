@@ -8,14 +8,14 @@ import { useRef, useState, useEffect } from "react";
 import { PlayFilledAlt, PauseFilled } from "@carbon/icons-react";
 import useSWR from "swr";
 
-// const fetcher = async (
-// 	input: RequestInfo,
-// 	init: RequestInit,
-// 	...args: any[]
-// ) => {
-// 	const res = await fetch(input, init);
-// 	return res.json();
-// };
+const fetcher = async (
+	input: RequestInfo,
+	init: RequestInit,
+	...args: any[]
+) => {
+	const res = await fetch(input, init);
+	return res.json();
+};
 
 const inter = IBM_Plex_Sans({
 	weight: "600",
@@ -28,10 +28,10 @@ const interText = IBM_Plex_Sans({
 export default function Posts() {
 	const [playing, setPlaying] = useState<boolean>(false);
 
-	// const [data, setData] = useState<any>();
-
 	const audioPlayer = useRef<any>();
 	const [trackPlaying, setTrackPlaying] = useState<string>("");
+
+	const { data } = useSWR("/api/posts", fetcher);
 
 	useEffect(() => {
 		if (playing) {
@@ -43,62 +43,78 @@ export default function Posts() {
 
 	return (
 		<div className={styles.posts}>
-			<div
-				// style={{backgroundImage: `url("/krewella.jpg")`,}}
-				className={styles.post}
-			>
-				{/* <div className={styles.frostedLayer}> */}
-				<div className={styles.imageContainer}>
-					<Image
-						className={styles.image}
-						style={{ objectFit: "cover" }}
-						alt=''
-						src='/krewella.jpg'
-						// width={250}
-						// height={250}
-						fill={true}
-						sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-					/>
-				</div>
-				<div className={styles.playBtn}>
-					{playing &&
-					trackPlaying ===
-						"http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/theme_01.mp3" ? (
-						<button
-							className={styles.button}
-							onClick={() => {
-								setPlaying(false);
-							}}
+			{/* {data
+				? data.map((d: any, index: any) => (
+						<div key={index}>{d.data.datetime}</div>
+				  ))
+				: null} */}
+
+			{/* {!data ? <div>loading...</div> : <div>DATA LOADED</div>} */}
+
+			{data ? (
+				data.map((d: any, index: any) => (
+					<div
+						// style={{backgroundImage: `url("${d.data.image}")`,}}
+						className={styles.post}
+						key={index}
+					>
+						{/* <div className={styles.frostedLayer}> */}
+						<div
+							style={{ backgroundImage: `url("${d.data.image}")` }}
+							className={styles.imageContainer}
 						>
-							<PauseFilled size='16' />
-						</button>
-					) : (
-						<button
-							className={styles.button}
-							onClick={() => {
-								setTrackPlaying(
-									"http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/theme_01.mp3"
-								);
-								setPlaying(true);
-							}}
-						>
-							<PlayFilledAlt size='16' />
-						</button>
-					)}
-				</div>
-				{/* <div className={styles.lock}>
-                    <Locked size='16' />
-                </div> */}
-				<div className={styles.dateTime}>
-					<div className={inter.className}>21:53 5 Nov 2022</div>
-				</div>
-				<div className={styles.textContainer}>
-					<div className={styles.text}>
-						<div className={interText.className}>1MIN to go and counting.</div>
+							{/* <Image
+									className={styles.image}
+									style={{ objectFit: "cover" }}
+									alt=''
+									src={`/${d.data?.image}`}
+									fill={true}
+									sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+								/> */}
+						</div>
+						<div className={styles.playBtn}>
+							{playing && trackPlaying === d.data.audio ? (
+								<button
+									className={styles.button}
+									onClick={() => {
+										setPlaying(false);
+									}}
+								>
+									<PauseFilled size='16' />
+								</button>
+							) : (
+								<button
+									className={styles.button}
+									onClick={() => {
+										setTrackPlaying(d.data.audio);
+										setPlaying(true);
+									}}
+								>
+									<PlayFilledAlt size='16' />
+								</button>
+							)}
+						</div>
+						<div className={styles.dateTime}>
+							<div className={inter.className}>21:53 5 Nov 2022</div>
+						</div>
+						<div className={styles.textContainer}>
+							<div className={styles.text}>
+								<div className={interText.className}>{d.data.transcript}</div>
+							</div>
+						</div>
+						{/* </div> */}
+					</div>
+				))
+			) : (
+				<div className={styles.mantra}>
+					<div className={styles.mantraUrdu}>
+						<div className={inter.className}>عشق</div>
+					</div>
+					<div className={styles.mantraEnglish}>
+						<div className={interText.className}>ISHQ x SONAR</div>
 					</div>
 				</div>
-				{/* </div> */}
-			</div>
+			)}
 			<div
 				// style={{backgroundImage: `url("/cat.png")`,}}
 				className={styles.post}
@@ -149,15 +165,12 @@ export default function Posts() {
 				<div className={styles.textContainer}>
 					<div className={styles.text}>
 						<div className={interText.className}>
-							CAT: 1MIN to go and counting.
+							1MIN to go and counting.
 						</div>
 					</div>
 				</div>
 				{/* </div> */}
 			</div>
-			{/* <audio controls>
-				<source src={trackPlaying} />
-			</audio> */}
 			<audio
 				// onLoadedMetadata={onLoadedMetadata}
 				// preload='auto'
