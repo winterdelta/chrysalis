@@ -6,6 +6,16 @@ import PlayBtn from "./play-btn";
 import { IBM_Plex_Sans } from "@next/font/google";
 import { useRef, useState, useEffect } from "react";
 import { PlayFilledAlt, PauseFilled } from "@carbon/icons-react";
+import useSWR from "swr";
+
+// const fetcher = async (
+// 	input: RequestInfo,
+// 	init: RequestInit,
+// 	...args: any[]
+// ) => {
+// 	const res = await fetch(input, init);
+// 	return res.json();
+// };
 
 const inter = IBM_Plex_Sans({
 	weight: "600",
@@ -17,6 +27,8 @@ const interText = IBM_Plex_Sans({
 
 export default function Posts() {
 	const [playing, setPlaying] = useState<boolean>(false);
+
+	// const [data, setData] = useState<any>();
 
 	const audioPlayer = useRef<any>();
 	const [trackPlaying, setTrackPlaying] = useState<string>("");
