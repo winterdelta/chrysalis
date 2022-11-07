@@ -51,19 +51,19 @@ export default function Posts() {
 
 			{/* {!data ? <div>loading...</div> : <div>DATA LOADED</div>} */}
 
-			{data ? (
-				data.map((d: any, index: any) => (
-					<div
-						// style={{backgroundImage: `url("${d.data.image}")`,}}
-						className={styles.post}
-						key={index}
-					>
-						{/* <div className={styles.frostedLayer}> */}
+			{data
+				? data.map((d: any, index: any) => (
 						<div
-							style={{ backgroundImage: `url("${d.data.image}")` }}
-							className={styles.imageContainer}
+							// style={{backgroundImage: `url("${d.data.image}")`,}}
+							className={styles.post}
+							key={index}
 						>
-							{/* <Image
+							{/* <div className={styles.frostedLayer}> */}
+							<div
+								style={{ backgroundImage: `url("${d.data.image}")` }}
+								className={styles.imageContainer}
+							>
+								{/* <Image
 									className={styles.image}
 									style={{ objectFit: "cover" }}
 									alt=''
@@ -71,50 +71,41 @@ export default function Posts() {
 									fill={true}
 									sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 								/> */}
-						</div>
-						<div className={styles.playBtn}>
-							{playing && trackPlaying === d.data.audio ? (
-								<button
-									className={styles.button}
-									onClick={() => {
-										setPlaying(false);
-									}}
-								>
-									<PauseFilled size='16' />
-								</button>
-							) : (
-								<button
-									className={styles.button}
-									onClick={() => {
-										setTrackPlaying(d.data.audio);
-										setPlaying(true);
-									}}
-								>
-									<PlayFilledAlt size='16' />
-								</button>
-							)}
-						</div>
-						<div className={styles.dateTime}>
-							<div className={inter.className}>21:53 5 Nov 2022</div>
-						</div>
-						<div className={styles.textContainer}>
-							<div className={styles.text}>
-								<div className={interText.className}>{d.data.transcript}</div>
 							</div>
+							<div className={styles.playBtn}>
+								{playing && trackPlaying === d.data.audio ? (
+									<button
+										className={styles.button}
+										onClick={() => {
+											setPlaying(false);
+										}}
+									>
+										<PauseFilled size='16' />
+									</button>
+								) : (
+									<button
+										className={styles.button}
+										onClick={() => {
+											setTrackPlaying(d.data.audio);
+											setPlaying(true);
+										}}
+									>
+										<PlayFilledAlt size='16' />
+									</button>
+								)}
+							</div>
+							<div className={styles.dateTime}>
+								<div className={inter.className}>21:53 5 Nov 2022</div>
+							</div>
+							<div className={styles.textContainer}>
+								<div className={styles.text}>
+									<div className={interText.className}>{d.data.transcript}</div>
+								</div>
+							</div>
+							{/* </div> */}
 						</div>
-						{/* </div> */}
-					</div>
-				))
-			) : (
-				<div className={styles.mantra}>
-					<div className={styles.mantraUrdu}>
-						<div className={inter.className}>عشق</div>
-					</div>
-					<div className={styles.mantraEnglish}>
-						<div className={interText.className}>ISHQ x SONAR</div>
-					</div>
-				</div>
-			)}
+				  ))
+				: null}
 			<div
 				// style={{backgroundImage: `url("/cat.png")`,}}
 				className={styles.post}
@@ -164,9 +155,7 @@ export default function Posts() {
 				</div>
 				<div className={styles.textContainer}>
 					<div className={styles.text}>
-						<div className={interText.className}>
-							1MIN to go and counting.
-						</div>
+						<div className={interText.className}>1MIN to go and counting.</div>
 					</div>
 				</div>
 				{/* </div> */}
