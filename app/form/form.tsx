@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const inter = IBM_Plex_Mono({
 	weight: "100",
+	subsets: ['latin']
 });
 
 type Inputs = {

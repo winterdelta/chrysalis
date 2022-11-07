@@ -19,10 +19,12 @@ const fetcher = async (
 
 const inter = IBM_Plex_Sans({
 	weight: "600",
+	subsets: ['latin']
 });
 
 const interText = IBM_Plex_Sans({
 	weight: "400",
+	subsets: ['latin']
 });
 
 export default function Posts() {

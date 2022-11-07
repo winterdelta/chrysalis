@@ -5,10 +5,12 @@ import { Noto_Nastaliq_Urdu, IBM_Plex_Sans } from "@next/font/google";
 
 const inter = Noto_Nastaliq_Urdu({
 	weight: "700",
+	subsets: ['arabic']
 });
 
 const interText = IBM_Plex_Sans({
 	weight: "400",
+	subsets: ['latin']
 });
 
 export default function Home() {
@@ -25,6 +27,15 @@ export default function Home() {
 							<div className={interText.className}>ISHQ x SONAR</div>
 						</div>
 					</div> */}
+
+					<div className={styles.mantra}>
+						<div className={styles.mantraUrdu}>
+							<div className={inter.className}>عشق</div>
+						</div>
+						<div className={styles.mantraEnglish}>
+							<div className={interText.className}>VOICES</div>
+						</div>
+					</div>
 
 					<div className={styles.content}>
 						<div className={styles.form}>
