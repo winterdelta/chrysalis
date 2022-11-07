@@ -5,7 +5,7 @@
 	height: 120px;
 	width: 100px;
 	border-radius: 30px 30px 40px 40px;
-	background-color: #ccf3ff;
+	background-color: var(--blue);
 	color: var(--deepgrey);
 	border: none;
 	cursor: pointer;

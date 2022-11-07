@@ -17,14 +17,14 @@ export default function Home() {
 			<div className={styles.container}>
 				<main className={styles.main}>
 					{/* <div className={styles.mantra}>If you know you know</div> */}
-					<div className={styles.mantra}>
+					{/* <div className={styles.mantra}>
 						<div className={styles.mantraUrdu}>
 							<div className={inter.className}>عشق</div>
 						</div>
 						<div className={styles.mantraEnglish}>
 							<div className={interText.className}>ISHQ x SONAR</div>
 						</div>
-					</div>
+					</div> */}
 
 					<div className={styles.content}>
 						<div className={styles.form}>
