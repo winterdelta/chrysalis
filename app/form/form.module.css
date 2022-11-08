@@ -110,9 +110,13 @@
 	height: 50px;
 	width: 50px;
 	margin-left: 120px;
-	background-color: var(--blue);
-	color: var(--deepgrey);
+	/* background-color: var(--blue); */
+	color: var(--blue);
 	cursor: pointer;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	border: 2px solid var(--blue);
 }
 
 .transcript {

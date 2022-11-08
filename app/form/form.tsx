@@ -194,11 +194,18 @@ export default function Form() {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-			{uploadedImage && (
+			{/* {uploadedImage && (
 				<Image height={100} width={100} src={uploadedImage} alt='' />
-			)}
+			)} */}
 
-			<label className={styles.imageUploader}>
+			<label
+				style={{
+					backgroundImage: uploadedImage
+						? `url(${uploadedImage})`
+						: "/cat.png",
+				}}
+				className={styles.imageUploader}
+			>
 				<input
 					// @ts-ignore
 					{...register("image")}
