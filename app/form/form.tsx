@@ -12,11 +12,12 @@ import { IBM_Plex_Mono } from "@next/font/google";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import MicRecorder from "mic-recorder-to-mp3";
+// import MicRecorder from "";
 import Router from "next/router";
 import { useRouter } from "next/router";
 // import { DateTime } from "luxon";
 import Image from "next/image";
+const MicRecorder = require("mic-recorder-to-mp3");
 
 const inter = IBM_Plex_Mono({
 	weight: "100",
