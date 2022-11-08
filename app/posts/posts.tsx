@@ -19,18 +19,19 @@ const fetcher = async (
 
 const inter = IBM_Plex_Sans({
 	weight: "600",
-	subsets: ['latin']
+	subsets: ["latin"],
 });
 
 const interText = IBM_Plex_Sans({
 	weight: "400",
-	subsets: ['latin']
+	subsets: ["latin"],
 });
 
 export default function Posts() {
 	const [playing, setPlaying] = useState<boolean>(false);
 
-	const audioPlayer = useRef<any>();
+	const audioPlayer = useRef<any>(null);
+
 	const [trackPlaying, setTrackPlaying] = useState<string>("");
 
 	const { data } = useSWR("/api/posts", fetcher);
@@ -97,11 +98,15 @@ export default function Posts() {
 								)}
 							</div>
 							<div className={styles.dateTime}>
-								<div className={inter.className}>21:53 5 Nov 2022</div>
+								<div className={inter.className}>
+									{new Date(d.data?.datetime).toString()}
+								</div>
 							</div>
 							<div className={styles.textContainer}>
 								<div className={styles.text}>
-									<div className={interText.className}>{d.data?.transcript}</div>
+									<div className={interText.className}>
+										{d.data?.transcript}
+									</div>
 								</div>
 							</div>
 							{/* </div> */}

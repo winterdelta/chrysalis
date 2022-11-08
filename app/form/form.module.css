@@ -4,10 +4,17 @@
 	align-items: center;
 	height: 120px;
 	width: 100px;
-	border-radius: 30px 30px 40px 40px;
+	border-radius: 40px;
 	background-color: var(--blue);
 	color: var(--deepgrey);
 	border: none;
+	cursor: pointer;
+}
+
+.microphoneButton {
+	border: none;
+	color: var(--deepgrey);
+	background-color: transparent;
 	cursor: pointer;
 }
 
@@ -18,6 +25,11 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border: none;
+	background-color: transparent;
+	height: 40px;
+	width: 40px;
+	cursor: pointer;
 }
 
 @keyframes pulse {
@@ -128,12 +140,12 @@
 }
 
 .encryptedConversation {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    background-color: var(--blue);
-    height: 100%;
-    width: 100%;
-    margin-top: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	background-color: var(--blue);
+	height: 100%;
+	width: 100%;
+	margin-top: 30px;
 }

@@ -5,26 +5,31 @@ import {
 	MicrophoneFilled,
 	Locked,
 	StopFilled,
-	Fire
+	Fire,
 } from "@carbon/icons-react";
 import styles from "./form.module.css";
 import { IBM_Plex_Mono } from "@next/font/google";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+import MicRecorder from "mic-recorder-to-mp3";
+import Router from "next/router";
+import { useRouter } from "next/router";
+// import { DateTime } from "luxon";
+import Image from "next/image";
 
 const inter = IBM_Plex_Mono({
 	weight: "100",
-	subsets: ['latin']
+	subsets: ["latin"],
 });
 
 type Inputs = {
-	example: string;
-	imageRequired: React.FormEvent<HTMLInputElement>;
-	transcript: string;
+	image: React.FormEvent<HTMLInputElement>;
+	transcription: string;
 };
 
 export default function Form() {
+	// 2 prototype state hooks
 	const [recording, setRecording] = useState<boolean>(false);
 	const [transcript, setTranscript] = useState<boolean>(false);
 
@@ -33,6 +38,53 @@ export default function Form() {
 
 	const [timer, setTimer] = useState<boolean>(false);
 	const [countdown, setCountdown] = useState<number>(59);
+
+	const [audioBlob, setAudioBlob] = useState(null);
+	const [blobURL, setBlobUrl] = useState<string>("");
+	const [audioFile, setAudioFile] = useState<any>(null);
+
+	const [isRecording, setIsRecording] = useState<boolean>(false);
+
+	const [isPlaying, setIsPlaying] = useState(false);
+	const [transcription, setTranscription] = useState<string>("");
+	const [audioURLFromS3, setAudioURL] = useState(null);
+
+	const [recordingTime, setRecordingTime] = useState<number>();
+
+	const recorder = useRef<any>(null); //Recorder
+
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	useEffect(() => {
+		//Declares the recorder object and stores it inside of ref
+		recorder.current = new MicRecorder({ bitRate: 128 });
+	}, []);
+
+	const startRecording = () => {
+		// Check if recording isn't blocked by browser
+		recorder.current.start().then(() => {
+			setIsRecording(true);
+		});
+	};
+
+	const stopRecording = () => {
+		recorder.current
+			.stop()
+			.getMp3()
+			.then(([Buffer, Blob]) => {
+				const file = new File(Buffer, "audio.mp3", {
+					type: Blob.type,
+					lastModified: Date.now(),
+				});
+				setAudioBlob(Blob);
+				const newBlobUrl = URL.createObjectURL(Blob);
+				setBlobUrl(newBlobUrl);
+				setIsRecording(false);
+				setAudioFile(file);
+				// console.log(DateTime.fromSeconds(file.lastModified));
+				// console.log(new Date(file.lastModified).toString());
+				setRecordingTime(file.lastModified);
+			});
+	};
 
 	const toggle = () => {
 		setRecording(!recording);
@@ -54,12 +106,30 @@ export default function Form() {
 		}
 	}, [countdown, timer]);
 
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	useEffect(() => {
+		if (audioBlob) {
+			submitVoiceMemo();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [audioBlob]);
+
+	const submitVoiceMemo = async () => {
+		const response = await fetch("/api/download-audio", {
+			method: "POST",
+			body: audioBlob,
+		});
+		const data = await response.json();
+		setTranscription(data.DString);
+		setAudioURL(data.audioURL);
+		// console.log(data.DString);
+	};
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<Inputs>();
-	const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
 	const uploadPhoto = async (e: React.FormEvent<HTMLInputElement>) => {
 		const target = e.target as HTMLInputElement;
@@ -87,20 +157,50 @@ export default function Form() {
 		});
 
 		if (upload.ok) {
-			console.log("FILE UPLOADED");
+			console.log("");
 		} else {
 			console.error("Upload failed.");
 		}
 	};
 
-	// console.log(watch("imageRequired")); // watch input value by passing the name of it
+	const handleTextAreaChange = (event: any) => {
+		setTranscription(event.target.value);
+	};
+
+	const router = useRouter();
+
+	const onSubmit: any = handleSubmit(async (formData) => {
+		try {
+			const res = await fetch("/api/appendPost", {
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					audioURLFromS3,
+					formData,
+					imageName,
+					recordingTime,
+				}),
+			});
+			if (res.status === 200) {
+				await setTranscription("");
+			} else {
+				throw new Error(await res.text());
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	});
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+			{uploadedImage && (
+				<Image height={100} width={100} src={uploadedImage} alt='' />
+			)}
+
 			<label className={styles.imageUploader}>
 				<input
 					// @ts-ignore
-					{...register("imageRequired", { required: true })}
+					{...register("image")}
 					className={styles.fileInput}
 					onChange={uploadPhoto}
 					type='file'
@@ -108,16 +208,22 @@ export default function Form() {
 				/>
 				<ImageSearchAlt size='24' />
 			</label>
-			<button onClick={toggle} className={styles.microphone}>
-				{recording ? (
-					<span className={styles.stopGlow}>
+			<div
+				onClick={isRecording ? stopRecording : startRecording}
+				className={styles.microphone}
+			>
+				{isRecording ? (
+					<button className={styles.stopGlow}>
 						<StopFilled size='32' />
-					</span>
+					</button>
 				) : (
-					<MicrophoneFilled size='32' />
+					<button className={styles.microphoneButton}>
+						<MicrophoneFilled size='32' />
+					</button>
 				)}
-			</button>
-			<div className={inter.className}>
+			</div>
+			{/* {blobURL && <audio controls src={blobURL} />} */}
+			{/* <div className={inter.className}>
 				{recording ? (
 					<div className={styles.time}>
 						{countdown == 0 ? null : "00:"}
@@ -128,19 +234,20 @@ export default function Form() {
 						00<span className={styles.blinkingColon}>:</span>00
 					</div>
 				)}
-			</div>
-			{transcript && (
+			</div> */}
+
+			{transcription && (
 				<>
 					<textarea
-						// value={transcription}
+						value={transcription}
 						className={styles.transcript}
 						// @ts-ignore
-						{...register("transcript", {
-							required: true,
+						{...register("transcription", {
 							maxLength: 1000,
 						})}
-						// onChange={handleTextAreaChange}
+						onChange={handleTextAreaChange}
 					></textarea>
+
 					<button className={styles.sendBtn} type='submit'>
 						<div className={inter.className}>
 							<Fire size='24' />
@@ -148,6 +255,7 @@ export default function Form() {
 					</button>
 				</>
 			)}
+
 			{/* <div className={styles.lock}>
 				<Locked size='16' />
 			</div> */}
